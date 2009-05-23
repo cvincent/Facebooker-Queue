@@ -13,7 +13,7 @@ h2. Features/Problems
 
 h2. Installation
 
-[git instructions here]
+@script/plugin install 	git://github.com/cvincent/Facebooker-Queue.git@
 
 h2. Setup
 
@@ -80,4 +80,4 @@ h2. Todo
 # Include adapters for more message queueing services, such as Starling
 
 
-Copyright (c) 2009 "Chris Vincent":http://code.isdangero.us/, released under the MIT license
+(c) 2009 "Chris Vincent":http://code.isdangero.us/, released under the MIT license
