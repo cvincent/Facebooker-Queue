@@ -76,8 +76,8 @@ If you do write an adapter for other popular queueing services, please let me kn
 
 h2. Todo
 
-# Support custom post-processing of queued requests
-# Include adapters for more message queueing services, such as Starling
+* Support custom post-processing of queued requests
+* Include adapters for more message queueing services, such as Starling
 
 
 (c) 2009 "Chris Vincent":http://code.isdangero.us/, released under the MIT license
