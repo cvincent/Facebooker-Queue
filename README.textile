@@ -1,0 +1,83 @@
+h2. FacebookerQueue
+
+FacebookerQueue is an easy way to background your Facebooker API calls.
+
+h2. Features/Problems
+
+# Simplest possible implementation
+# Easy setup
+# Transparent, drop-in queueing
+# Can always override to perform synchronous requests
+# Queue-service agnostic; interface with the messaging queue service of your choice using a simple adapter class
+# Support for "Beanstalkd":http://xph.us/software/beanstalkd/ out of the box; more to come?
+
+h2. Installation
+
+[git instructions here]
+
+h2. Setup
+
+h3. facebooker.yml
+
+You will need to add a @queue_service_adapter@ line to your facebooker.yml config. Currently, only @beanstalked@ is supported out of the box, which also requires a @queue_pool_address@ line. For example:
+
+<pre>
+<code>
+  development:
+    api_key: XXXX
+    secret_key: XXXX
+    canvas_page_name: XXXX
+    callback_url: http://XXXX:3000
+    pretty_errors: true
+    set_asset_host_to_callback_url: true
+    tunnel:
+      public_host_username: 
+      public_host: 
+      public_port: 4007
+      local_port: 3000
+    queue_service_adapter: beanstalked
+    queue_pool_address: localhost:11300
+</code>
+</pre>
+
+h3. Worker daemon
+
+The worker script requires the @daemons@ gem:
+
+@sudo gem install daemons@
+
+Generate the queue daemon by running:
+
+@script/generate facebooker_queue_daemon@
+
+Start, stop, or restart the daemon using:
+
+@lib/daemons/facebooker_queue_ctl (start|stop|restart)@
+
+h2. Usage
+
+Just use Facebooker as you normally would and your API calls will be queued.
+
+If you need to get the results of an API request, you will need to override the queue and call the method synchronously. This is easily achieved:
+
+<pre>
+<code>
+  facebooker_session.sync do
+    # anything here will be run synchronously
+  end
+</code>
+</pre>
+
+h2. Writing your own queueing service adapter
+
+The interface for the queueing service is simple. Simply write a class which mimics the interface of @lib/queue_adapters/beanstalked_adapter.rb@.
+
+If you do write an adapter for other popular queueing services, please let me know and it will be included with this plugin.
+
+h2. Todo
+
+# Support custom post-processing of queued requests
+# Include adapters for more message queueing services, such as Starling
+
+
+Copyright (c) 2009 "Chris Vincent":http://code.isdangero.us/, released under the MIT license
