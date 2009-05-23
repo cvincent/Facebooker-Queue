@@ -1,6 +1,6 @@
-h2. FacebookerQueue
+h2. Facebooker Queue
 
-FacebookerQueue is an easy way to background your Facebooker API calls.
+Facebooker Queue is an easy way to background your Facebooker API calls.
 
 h2. Features/Problems
 
