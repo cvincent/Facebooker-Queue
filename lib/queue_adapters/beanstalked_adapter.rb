@@ -2,7 +2,7 @@ require 'beanstalk-client'
 
 class BeanstalkedAdapter
   def initialize(*args)
-    @beanstalk = Beanstalk::Pool.new(*args)
+    @beanstalk = Beanstalk::Pool.new(args, 'facebooker-queue')
   end
   
   def put(params)

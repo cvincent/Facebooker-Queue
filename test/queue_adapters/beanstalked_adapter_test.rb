@@ -5,7 +5,7 @@ class BeanstalkedAdapterTest < ActiveSupport::TestCase
   context 'a BeanstalkedAdapter instance' do
     setup do
       @pool = mock
-      Beanstalk::Pool.expects(:new).with('localhost:11300').returns(@pool)
+      Beanstalk::Pool.expects(:new).with(['localhost:11300'], 'facebooker-queue').returns(@pool)
       @adapter = BeanstalkedAdapter.new('localhost:11300')
     end
     
