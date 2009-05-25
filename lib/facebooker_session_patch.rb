@@ -5,14 +5,15 @@ module Facebooker
   class Session
     def post_with_async(method, params = {}, use_session = true, &proc)
       never_queue = ['facebook.auth.getSession', 'facebook.auth.createToken']
-      if never_queue.include?(method) or batch_request?
-        self.post_without_async(method, params, use_session)
+      if never_queue.include?(method) or batch_request? or !queue?
+        self.post_without_async(method, params, use_session, &proc)
       else
-        if queue?
-          self.queue_service_adapter.put(:method => method, :params => params, :use_session => use_session, :session_key => self.session_key, :uid => uid, :expires => @expires)
-        else
-          self.post_without_async(method, params, use_session, &proc)
-        end
+        self.queue_service_adapter.put(
+          :method => method, :params => params, :use_session => use_session,
+          :session_key => (use_session ? self.session_key : nil),
+          :uid => (use_session ? uid : nil),
+          :expires => @expires
+        )
       end
     end
     
