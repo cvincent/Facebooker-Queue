@@ -4,7 +4,8 @@ module Facebooker
   
   class Session
     def post_with_async(method, params = {}, use_session = true, &proc)
-      if method == 'facebook.auth.createToken' or batch_request?
+      never_queue = ['facebook.auth.getSession', 'facebook.auth.createToken']
+      if never_queue.include?(method) or batch_request?
         self.post_without_async(method, params, use_session)
       else
         if queue?
