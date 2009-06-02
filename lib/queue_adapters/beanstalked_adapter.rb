@@ -10,7 +10,7 @@ class BeanstalkedAdapter
   end
   
   def get
-    if @beanstalk.stats['current-jobs-ready'] > 0
+    if @beanstalk.stats_tube('facebooker-queue')['current-jobs-ready'] > 0
       job = @beanstalk.reserve
       job.delete
       job.ybody
