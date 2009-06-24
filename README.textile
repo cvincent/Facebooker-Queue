@@ -15,7 +15,7 @@ h2. Installation
 
 @script/plugin install 	git://github.com/cvincent/Facebooker-Queue.git@
 
-Or you can install as a git submodule:
+Make sure you rename the plugin directory from "Facebooker-Queue" to "facebooker_queue". Alternatively, you can install as a git submodule:
 
 @git submodule add git://github.com/cvincent/Facebooker-Queue.git vendor/plugins/facebooker_queue@
 
@@ -43,6 +43,8 @@ You will need to add a @queue_service_adapter@ line to your facebooker.yml confi
     queue_pool_address: localhost:11300
 </code>
 </pre>
+
+Note that only environments which have specified a @queue_service_adapter@ will queue requests. This allows you, for example, to activate queueing only in production.
 
 h3. Worker daemon
 
@@ -83,5 +85,9 @@ h2. Todo
 * Support custom post-processing of queued requests
 * Include adapters for more message queueing services, such as Starling
 
+h2. Contributors
+
+* "Chris Vincent":http://code.isdangero.us/
+* "Andrew Ng":http://blog.andrewng.com/
 
 (c) 2009 "Chris Vincent":http://code.isdangero.us/, released under the MIT license
