@@ -12,11 +12,12 @@ class FacebookerSessionPatchTest < ActiveSupport::TestCase
     end
     
     context 'calling #queue_service_adapter' do
-      should 'fail if no adapter class has been set' do
+      should 'work ok if no adapter class has been set' do
         Facebooker.stubs(:facebooker_config).returns({})
-        assert_raise Facebooker::QueueServiceAdapterNotFound do
+        assert_nothing_raised do
           @session.queue_service_adapter
         end
+        assert_nil @session.queue_service_adapter
       end
       
       should 'fail if adapter class cannot be found' do
@@ -72,6 +73,17 @@ class FacebookerSessionPatchTest < ActiveSupport::TestCase
           @session.batch do
             2.times { @session.post(@method, @params, @use_session) }
           end
+        end
+      end
+      
+      context "no queue_service_adapter specified" do
+        setup do
+          @session.stubs(:queue_service_adapter).returns(nil)
+        end
+        
+        should "post with queueing disabled" do
+          @session.expects(:post_without_async).with(@method, @params, @use_session)
+          @session.post(@method, @params, @use_session)
         end
       end
     end
