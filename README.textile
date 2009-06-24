@@ -15,6 +15,10 @@ h2. Installation
 
 @script/plugin install 	git://github.com/cvincent/Facebooker-Queue.git@
 
+Or you can install as a git submodule:
+
+@git submodule add git://github.com/cvincent/Facebooker-Queue.git vendor/plugins/facebooker_queue@
+
 h2. Setup
 
 h3. facebooker.yml
