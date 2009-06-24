@@ -4,9 +4,8 @@ require 'queue_adapters/beanstalked_adapter'
 class BeanstalkedAdapterTest < ActiveSupport::TestCase
   context 'a BeanstalkedAdapter instance' do
     setup do
-      @pool = mock
-      Beanstalk::Pool.expects(:new).with(['localhost:11300'], 'facebooker-queue').returns(@pool)
-      @adapter = BeanstalkedAdapter.new('localhost:11300')
+      Beanstalk::Pool.expects(:new).with([arg='localhost:11300'], 'facebooker-queue').returns(@pool=mock)
+      @adapter = BeanstalkedAdapter.new(arg)
     end
     
     should 'delegate #puts to the Beanstalk::Pool instance' do
@@ -16,11 +15,10 @@ class BeanstalkedAdapterTest < ActiveSupport::TestCase
     end
     
     should 'delegate #get to the Beanstalk::Pool instance #reserve, #delete the job, and return its #ybody' do
-      job = mock
-      @pool.expects(:stats).returns('current-jobs-ready' => 1)
-      @pool.expects(:reserve).returns(job)
-      job.expects(:delete)
-      job.expects(:ybody).returns(:key => 'value')
+      @pool.expects(:reserve).returns(mock(:delete => true, :ybody => { :key => 'value' }))
+      stats_tube = mock
+      stats_tube.expects(:[]).with('current-jobs-ready').returns(1)
+      @pool.expects(:stats_tube).with('facebooker-queue').returns(stats_tube)
       assert_equal @adapter.get, { :key => 'value' }
     end
   end
