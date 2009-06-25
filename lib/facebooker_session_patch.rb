@@ -17,8 +17,7 @@ module Facebooker
       end
     end
     
-    alias_method :post_without_async, :post
-    alias_method :post, :post_with_async
+    alias_method_chain :post, :async
     
     def sync(&block)
       @queueing = false
