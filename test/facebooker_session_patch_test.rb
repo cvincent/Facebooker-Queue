@@ -57,6 +57,12 @@ class FacebookerSessionPatchTest < ActiveSupport::TestCase
         @session.post(@method, @params, @use_session)
       end
       
+      should "delegate to #post_without_async if it's a never-queued method" do
+        @method = 'facebook.application.getPublicInfo'
+        @session.expects(:post_without_async).with(@method, @params, @use_session)
+        @session.post(@method, @params, @use_session)
+      end
+      
       should 'pass a hash of the params to #queue_service_adapter if #queue? returns true' do
         mock_adapter = mock
         mock_adapter.expects(:put).with(:method => @method, :params => @params, :use_session => @use_session, :session_key => @session_key, :uid => @uid.to_i, :expires => @expires)
