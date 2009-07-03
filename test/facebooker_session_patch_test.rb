@@ -46,7 +46,7 @@ class FacebookerSessionPatchTest < ActiveSupport::TestCase
     
     context 'calling #post' do
       setup do
-        @method = 'some.facebookCall'
+        @method = 'facebook.feed.publishUserAction'
         @params = { :param => 'value' }
         @use_session = true
       end
@@ -57,7 +57,7 @@ class FacebookerSessionPatchTest < ActiveSupport::TestCase
         @session.post(@method, @params, @use_session)
       end
       
-      should "delegate to #post_without_async if it's a never-queued method" do
+      should "delegate to #post_without_async if it's not an async method" do
         @method = 'facebook.application.getPublicInfo'
         @session.expects(:post_without_async).with(@method, @params, @use_session)
         @session.post(@method, @params, @use_session)
