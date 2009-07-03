@@ -4,8 +4,8 @@ module Facebooker
   
   class Session
     def post_with_async(method, params = {}, use_session = true, &proc)
-      never_queue = %w(facebook.auth.getSession facebook.auth.createToken facebook.application.getPublicInfo)
-      if never_queue.include?(method) || batch_request? || !queue? || !(qsa = self.queue_service_adapter)
+      async_methods = %w(facebook.feed.publishUserAction facebook.profile.setFBML facebook.notifications.sendEmail facebook.notifications.send)
+      if !async_methods.include?(method) || batch_request? || !queue? || !(qsa = self.queue_service_adapter)
         self.post_without_async(method, params, use_session, &proc)
       else
         qsa.put(
