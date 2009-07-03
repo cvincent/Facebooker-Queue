@@ -46,7 +46,7 @@ class FacebookerSessionPatchTest < ActiveSupport::TestCase
     
     context 'calling #post' do
       setup do
-        @method = 'facebook.feed.publishUserAction'
+        @method = 'facebook.profile.setFBML'
         @params = { :param => 'value' }
         @use_session = true
       end
