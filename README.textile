@@ -62,7 +62,12 @@ Start, stop, or restart the daemon using:
 
 h2. Usage
 
-Just use Facebooker as you normally would and your API calls will be queued.
+Just use Facebooker as you normally would and the following API calls will be queued:
+
+* facebook.notifications.send
+* facebook.notifications.sendEmail
+* facebook.feed.publishUserAction
+* facebook.profile.setFBML
 
 If you need to get the results of an API request, you will need to override the queue and call the method synchronously. This is easily achieved:
 
@@ -82,7 +87,7 @@ If you do write an adapter for other popular queueing services, please let me kn
 
 h2. Todo
 
-* Support custom post-processing of queued requests
+* Support custom post-processing of queued requests for _any_ API method
 * Include adapters for more message queueing services, such as Starling
 
 h2. Contributors
