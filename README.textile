@@ -68,6 +68,7 @@ Just use Facebooker as you normally would and the following API calls will be qu
 * facebook.notifications.sendEmail
 * facebook.feed.publishUserAction
 * facebook.profile.setFBML
+* facebook.liveMessage.send
 
 If you need to get the results of an API request, you will need to override the queue and call the method synchronously. This is easily achieved:
 
